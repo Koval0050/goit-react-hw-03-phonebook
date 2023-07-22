@@ -1,0 +1,20 @@
+.formContact {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: rgb(230, 247, 238);
+}
+.formInput {
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.labelText {
+  font-size: 17px;
+  font-family: sans-serif;
+}
+.btnForm {
+  display: block;
+  border-radius: 5px;
+  background-color: antiquewhite;
+  padding: 8px;
+}
