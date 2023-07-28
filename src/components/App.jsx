@@ -4,22 +4,31 @@ import ContactList from './ContactList/ContactList';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
+  componentDidMount() {
+    // Завантажуємо контакти з localStorage під час початкового відтворення
+    const storedContacts = localStorage.getItem('contacts');
+    if (storedContacts) {
+      this.setState({ contacts: JSON.parse(storedContacts) });
+    }
+  }
+
+  componentDidUpdate() {
+    // Зберігаємо контакти в localStorage кожного разу, коли змінюється стан «контактів».
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   getInfoForm = formData => {
-    this.state.contacts.forEach(element => {
-      if (formData.name === element.name) {
-        alert(`${element.name} is alredy in contacts`);
-        return;
-      }
-    });
+    const isContactExists = this.state.contacts.some(
+      contact => formData.name === contact.name
+    );
+    if (isContactExists) {
+      alert(`${formData.name} is already in contacts`);
+      return;
+    }
 
     this.setState(prevState => ({
       contacts: [...prevState.contacts, formData],
@@ -66,3 +75,5 @@ export class App extends Component {
     );
   }
 }
+
+export default App;
