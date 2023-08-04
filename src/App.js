@@ -23,6 +23,19 @@ export class App extends React.Component {
     buttonVisible: true,
   };
 
+  componentDidUpdate(prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      save("contacts", this.state.contacts);
+    }
+  }
+  componentDidMount() {
+    const savedContacts = load("contacts");
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
+    }
+  }
+
+  
   handleAddContact = (newContactData) => {
     const newContactEntity = {
       id: nanoid(),
@@ -37,17 +50,6 @@ export class App extends React.Component {
     save("contacts", this.state.contacts);
   };
 
-  componentDidUpdate(prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      save("contacts", this.state.contacts);
-    }
-  }
-  componentDidMount() {
-    const savedContacts = load("contacts");
-    if (savedContacts) {
-      this.setState({ contacts: savedContacts });
-    }
-  }
 
   handleDeleteContact = (contactId) => {
     this.setState((state) => ({
